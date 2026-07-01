@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horský Běh 2026 | Profesionální běžecký závod</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Proměnné pro snadnou změnu barev */
+        :root {
+            --primary-color: #e63946; /* Energická červená */
+            --primary-hover: #d62828;
+            --dark-bg: #0B2545; /* Hluboká modrá pro profesionalitu */
+            --light-bg: #f8f9fa;
+            --text-main: #333333;
+            --text-muted: #6c757d;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+        }
+
+        /* Základní reset a typografie */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--white);
+        }
+
+        /* Tlačítka */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+            color: var(--white);
+        }
+
+        /* Navigace */
+        header {
+            background-color: rgba(11, 37, 69, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--white);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Úvodní sekce (Hero) */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(11, 37, 69, 0.7), rgba(11, 37, 69, 0.7)), url('https://images.unsplash.com/photo-1452626022479-8dbae1a46eb1?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        /* Společné styly sekcí */
+        section {
+            padding: 6rem 5%;
+        }
+
+        .bg-light {
+            background-color: var(--light-bg);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-bg);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* O závodu - Rozložení */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Trasy a ceník */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border: 1px solid #eaeaea;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .pricing-card.featured::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--primary-color);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            color: var(--dark-bg);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .distance-badge {
+            background: var(--light-bg);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--dark-bg);
+        }
+
+        /* Mapa */
+        .map-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 500px;
+            background: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80') center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .map-placeholder::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(11, 37, 69, 0.6);
+        }
+
+        .map-text {
+            position: relative;
+            z-index: 1;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Galerie */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 250px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Registrace */
+        .registration-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 4rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--dark-bg);
+        }
+
+        .form-group input, 
+        .form-group select {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: #fafafa;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+        }
+
+        .form-submit {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .form-submit .btn {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Patička */
+        footer {
+            background-color: var(--dark-bg);
+            color: rgba(255,255,255,0.7);
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.9rem;
+        }
+
+        /* Responzivita */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            nav {
+                margin-top: 1rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+            nav a {
+                margin: 0;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .registration-wrapper {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Horský Běh</div>
+        <nav>
+            <a href="#o-zavodu">O závodu</a>
+            <a href="#trasy">Trasy a ceník</a>
+            <a href="#mapa">Mapa</a>
+            <a href="#galerie">Galerie</a>
+            <a href="#registrace">Registrace</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Překonej své limity</h1>
+        <p>Zažijte neopakovatelnou atmosféru horského běhu. Čekají na vás nádherné výhledy, profesionální zázemí a trasy pro každého.</p>
+        <a href="#registrace" class="btn">Chci se zúčastnit</a>
+    </section>
+
+    <section id="o-zavodu">
+        <div class="about-grid">
+            <div>
+                <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+                    <h2>O závodu</h2>
+                </div>
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 1.1rem;">
+                    Tradiční běžecký závod zasazený do nádherné horské přírody. Naším cílem je propojit komunitu sportovců, nadšenců do pohybu a rodiny s dětmi.
+                </p>
+                <p style="margin-bottom: 2rem; color: var(--text-muted);">
+                    Závod je kompletně zabezpečen profesionální čipovou časomírou, bohatě zásobenými občerstvovacími stanicemi a zdravotnickým dohledem. Připravte se na pečlivě značené trasy, skvělou atmosféru a pamětní medaili pro každého v cíli.
+                </p>
+                <ul style="list-style: none; color: var(--dark-bg); font-weight: 600;">
+                    <li style="margin-bottom: 0.5rem;"> Profesionální organizace</li>
+                    <li style="margin-bottom: 0.5rem;"> Krásná příroda</li>
+                    <li> Bohatý doprovodný program</li>
+                </ul>
+            </div>
+            <div class="about-image">
+                <img src="https://images.unsplash.com/photo-1552674605-15c9ef04a528?auto=format&fit=crop&w=800&q=80" alt="Běžci na startu">
+            </div>
+        </div>
+    </section>
+
+    <section id="trasy" class="bg-light">
+        <div class="section-header">
+            <h2>Trasy a Startovné</h2>
+            <p>Vyberte si distanci, která vám nejlépe sedne. Závodíme v kategoriích mužů, žen i dětí.</p>
+        </div>
+        
+        <div class="pricing-grid">
+            <div class="pricing-card featured">
+                <h3>Dospělí</h3>
+                <div class="price">650 Kč <span>/ osoba</span></div>
+                <ul class="pricing-features">
+                    <li>Hlavní trasa <span class="distance-badge">16 km</span></li>
+                    <li>Střední trasa <span class="distance-badge">10 km</span></li>
+                    <li>Hobby běh <span class="distance-badge">5 km</span></li>
+                </ul>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Věkové kategorie: 18-39 let, 40-49 let, 50+ let (Muži i Ženy)</p>
+                <a href="#registrace" class="btn" style="width: 100%; padding: 1rem;">Registrovat</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Děti do 15 let</h3>
+                <div class="price">150 Kč <span>/ osoba</span></div>
+                <ul class="pricing-features">
+                    <li>Rodinný běh a starší děti <span class="distance-badge">2 km</span></li>
+                    <li>Závod pro nejmenší <span class="distance-badge">1 km</span></li>
+                </ul>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Věkové kategorie: do 6 let, 7-10 let, 11-15 let</p>
+                <a href="#registrace" class="btn" style="width: 100%; padding: 1rem; background-color: var(--dark-bg);">Registrovat dítě</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="mapa">
+        <div class="section-header">
+            <h2>Mapa trasy a zázemí</h2>
+            <p>Detailní profil trasy a umístění občerstvovacích stanic bude zveřejněno měsíc před startem.</p>
+        </div>
+        <div class="map-container">
+            <div class="map-placeholder">
+                <div class="map-text">
+                    Zde bude vložena interaktivní mapa (Google Maps / Mapy.cz)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galerie" class="bg-light">
+        <div class="section-header">
+            <h2>Galerie z minulých ročníků</h2>
+            <p>Nahlédněte do atmosféry, která vás na startu čeká.</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80" alt="Běžec na trati"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1502224562085-639556652f33?auto=format&fit=crop&w=800&q=80" alt="Horský běh"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&q=80" alt="Sprint do cíle"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1517838503506-3b561768809d?auto=format&fit=crop&w=800&q=80" alt="Atmosféra na startu"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1530143584546-02191bc84eb5?auto=format&fit=crop&w=800&q=80" alt="Běžecké boty v terénu"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=800&q=80" alt="Běžci stoupající do kopce"></div>
+        </div>
+    </section>
+
+    <section id="registrace">
+        <div class="section-header">
+            <h2>Online Registrace</h2>
+            <p>Zajistěte si své místo na startu ještě dnes. Kapacita závodu je omezena.</p>
+        </div>
+        
+        <div class="registration-wrapper">
+            <form action="#" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="jmeno">Křestní jméno</label>
+                        <input type="text" id="jmeno" name="jmeno" required placeholder="Jan">
+                    </div>
+                    <div class="form-group">
+                        <label for="prijmeni">Příjmení</label>
+                        <input type="text" id="prijmeni" name="prijmeni" required placeholder="Novák">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">E-mailová adresa</label>
+                        <input type="email" id="email" name="email" required placeholder="jan.novak@email.cz">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefon">Telefonní číslo</label>
+                        <input type="tel" id="telefon" name="telefon" placeholder="+420 123 456 789">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="kategorie">Věková kategorie</label>
+                        <select id="kategorie" name="kategorie" required>
+                            <option value="" disabled selected>Zvolte kategorii</option>
+                            <optgroup label="Dospělí (650 Kč)">
+                                <option value="m18">Muži 18 - 39 let</option>
+                                <option value="m40">Muži 40 - 49 let</option>
+                                <option value="m50">Muži 50+ let</option>
+                                <option value="z18">Ženy 18 - 39 let</option>
+                                <option value="z40">Ženy 40 - 49 let</option>
+                                <option value="z50">Ženy 50+ let</option>
+                            </optgroup>
+                            <optgroup label="Děti do 15 let (150 Kč)">
+                                <option value="d6">Děti do 6 let</option>
+                                <option value="d10">Děti 7 - 10 let</option>
+                                <option value="d15">Děti 11 - 15 let</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="trasa">Výběr trasy</label>
+                        <select id="trasa" name="trasa" required>
+                            <option value="" disabled selected>Zvolte délku trasy</option>
+                            <option value="16km">16 km (Hlavní závod)</option>
+                            <option value="10km">10 km (Střední trať)</option>
+                            <option value="5km">5 km (Hobby běh)</option>
+                            <option value="2km">2 km (Rodiny a starší děti)</option>
+                            <option value="1km">1 km (Nejmenší děti)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="btn">Přejít k platbě startovného</button>
+                    <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted);">Kliknutím na tlačítko souhlasíte s obchodními podmínkami a pravidly závodu.</p>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Horský Běh</h4>
+                <p>Profesionální běžecký závod pro všechny generace. Spojujeme lásku ke sportu a respekt k přírodě.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Rychlé odkazy</h4>
+                <ul>
+                    <li><a href="#o-zavodu">O závodu</a></li>
+                    <li><a href="#trasy">Trasy a ceník</a></li>
+                    <li><a href="#galerie">Fotogalerie</a></li>
+                    <li><a href="#registrace">Registrace</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Kontakt</h4>
+                <ul>
+                    <li>Email: <a href="mailto:info@horskybeh.cz">info@horskybeh.cz</a></li>
+                    <li>Tel: +420 123 456 789</li>
+                    <li>Místo startu: Horská chata, Krkonoše</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Horský Běh. Ukázkový projekt pro portfolio. Všechna práva vyhrazena.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
